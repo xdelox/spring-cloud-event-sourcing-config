@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: development
+    active: docker
 ---
 server:
   contextPath: /uaa
@@ -19,15 +19,23 @@ security:
   user:
     password: password
   enable-csrf: false
-logging.level.org.springframework.security: DEBUG
 spring:
-  profiles: development
+  profiles: docker
   datasource:
-    url: jdbc:mysql://5.189.143.214:3306/dev
-    username: root
-    password: dbpass
-    initialize: true
+    url: jdbc:mysql://css-users-db:3306/users
+    username: users_mgr
+    password: users_123
+    initialize: false
 security.ignored: /resources/**
+eureka:
+  instance:
+    prefer-ip-address: true
+    non-secure-port: 8181
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
 ---
 server:
   port: 8181

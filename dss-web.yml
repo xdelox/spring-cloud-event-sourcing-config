@@ -1,11 +1,11 @@
 spring:
   profiles:
-    active: development
+    active: docker
 ---
 spring:
   profiles: cloud
   application:
-    name: online-store-web
+    name: dss-web
 zuul:
   ignored-services: '*'
   routes:
@@ -32,7 +32,7 @@ security:
 spring:
   profiles: development
   application:
-    name: online-store-web
+    name: dss-web
 zuul:
   ignored-services: '*'
   routes:
@@ -67,31 +67,31 @@ eureka:
 spring:
   profiles: docker
   application:
-    name: online-store-web
+    name: dss-web
 zuul:
   ignored-services: '*'
   routes:
     edge-service:
       path: /api/**
-      url: http://${DOCKER_IP:5.189.143.214}:9999
+      url: http://${DOCKER_IP:localhost}:9999
     auth-service:
       path: /user/**
-      url: http://${DOCKER_IP:5.189.143.214}:8181/uaa/user
+      url: http://${DOCKER_IP:localhost}:8181/uaa/user
     user-service:
       path: /users/**
 security:
   enable-csrf: false
   oauth2:
     resource:
-      userInfoUri: http://${DOCKER_IP:5.189.143.214}:8181/uaa/user
+      userInfoUri: http://${DOCKER_IP:localhost:8181/uaa/user
     client:
-      accessTokenUri: http://${DOCKER_IP:5.189.143.214}:8181/uaa/oauth/token
-      userAuthorizationUri: http://${DOCKER_IP:5.189.143.214}:8181/uaa/oauth/authorize
+      accessTokenUri: http://${DOCKER_IP:localhost}:8181/uaa/oauth/token
+      userAuthorizationUri: http://${DOCKER_IP:localhost}:8181/uaa/oauth/authorize
       clientId: acme
       clientSecret: acmesecret
 eureka:
   instance:
-    non-secure-port: 8787
+    non-secure-port: 10080
     prefer-ip-address: true
   client:
     registerWithEureka: true
